@@ -26,6 +26,9 @@ security:
             lazy: true
             provider: app_user_provider
 
+            # Vérifie notamment que le compte est actif.
+            user_checker: App\Security\UserChecker
+
             # Authentification par formulaire
             form_login:
                 login_path: app_login
@@ -46,7 +49,7 @@ security:
         # La page de connexion reste publique
         - { path: ^/login$, roles: PUBLIC_ACCESS }
 
-        # Administration : uniquement pour toi / ROLE_ADMIN
+        # Administration : uniquement ROLE_ADMIN
         - { path: ^/admin, roles: ROLE_ADMIN }
 
         # Dashboard : utilisateurs connectés
