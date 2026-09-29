@@ -1,20 +1,526 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello Admin/UserController!{% endblock %}
+{% block title %}
+    Utilisateurs | Supplier Manager
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="min-h-screen bg-slate-50">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/Emarh-Projects/supplier-manager/src/Controller/Admin/UserController.php</code></li>
-        <li>Your template at <code>/Users/admin/Desktop/Programming/EBANG_MEZUI/Emarh-Projects/supplier-manager/templates/admin/user/index.html.twig</code></li>
-    </ul>
+    <header class="border-b border-slate-200 bg-white">
+
+        <div
+            class="
+                mx-auto
+                flex
+                max-w-7xl
+                items-center
+                justify-between
+                px-6
+                py-4
+            "
+        >
+
+            <a
+                href="{{ path('app_dashboard') }}"
+                class="flex items-center gap-3"
+            >
+
+                <div
+                    class="
+                        flex
+                        h-10
+                        w-10
+                        items-center
+                        justify-center
+                        rounded-xl
+                        bg-emerald-500
+                        font-bold
+                        text-slate-950
+                    "
+                >
+                    SM
+                </div>
+
+                <div>
+                    <p class="font-semibold">
+                        Supplier Manager
+                    </p>
+
+                    <p class="text-xs text-slate-500">
+                        Administration
+                    </p>
+                </div>
+
+            </a>
+
+
+            <a
+                href="{{ path('app_dashboard') }}"
+                class="
+                    rounded-lg
+                    px-3
+                    py-2
+                    text-sm
+                    font-semibold
+                    text-slate-600
+                    hover:bg-slate-100
+                "
+            >
+                ← Tableau de bord
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main class="mx-auto max-w-7xl px-6 py-10">
+
+        {% for message in app.flashes('success') %}
+
+            <div
+                class="
+                    mb-6
+                    rounded-xl
+                    border
+                    border-emerald-200
+                    bg-emerald-50
+                    px-4
+                    py-3
+                    text-sm
+                    text-emerald-800
+                "
+            >
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+
+        {% for message in app.flashes('error') %}
+
+            <div
+                class="
+                    mb-6
+                    rounded-xl
+                    border
+                    border-red-200
+                    bg-red-50
+                    px-4
+                    py-3
+                    text-sm
+                    text-red-700
+                "
+            >
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+
+        <div
+            class="
+                mb-8
+                flex
+                flex-col
+                justify-between
+                gap-5
+                sm:flex-row
+                sm:items-end
+            "
+        >
+
+            <div>
+
+                <p
+                    class="
+                        mb-2
+                        text-sm
+                        font-semibold
+                        text-emerald-600
+                    "
+                >
+                    ADMINISTRATION
+                </p>
+
+                <h1
+                    class="
+                        text-3xl
+                        font-bold
+                        tracking-tight
+                        text-slate-950
+                    "
+                >
+                    Utilisateurs
+                </h1>
+
+                <p class="mt-2 text-slate-500">
+                    Gérez les personnes autorisées à accéder
+                    à l'application.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ path('admin_user_new') }}"
+                class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    rounded-xl
+                    bg-slate-950
+                    px-5
+                    py-3
+                    text-sm
+                    font-semibold
+                    text-white
+                    transition
+                    hover:bg-slate-800
+                "
+            >
+                + Nouvel utilisateur
+            </a>
+
+        </div>
+
+
+        <div
+            class="
+                overflow-hidden
+                rounded-2xl
+                border
+                border-slate-200
+                bg-white
+                shadow-sm
+            "
+        >
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-slate-50">
+
+                        <tr
+                            class="
+                                text-left
+                                text-xs
+                                font-semibold
+                                uppercase
+                                tracking-wider
+                                text-slate-500
+                            "
+                        >
+                            <th class="px-6 py-4">
+                                Utilisateur
+                            </th>
+
+                            <th class="px-6 py-4">
+                                Rôle
+                            </th>
+
+                            <th class="px-6 py-4">
+                                Statut
+                            </th>
+
+                            <th class="px-6 py-4">
+                                Créé le
+                            </th>
+
+                            <th class="px-6 py-4 text-right">
+                                Actions
+                            </th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y divide-slate-100">
+
+                    {% for user in users %}
+
+                        <tr class="hover:bg-slate-50/70">
+
+                            <td class="px-6 py-5">
+
+                                <div class="flex items-center gap-3">
+
+                                    <div
+                                        class="
+                                            flex
+                                            h-10
+                                            w-10
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            rounded-full
+                                            bg-slate-100
+                                            text-sm
+                                            font-bold
+                                            text-slate-700
+                                        "
+                                    >
+                                        {{ user.firstName|first|upper }}
+                                        {{ user.lastName|first|upper }}
+                                    </div>
+
+                                    <div>
+
+                                        <p
+                                            class="
+                                                font-semibold
+                                                text-slate-900
+                                            "
+                                        >
+                                            {{ user.fullName }}
+
+                                            {% if app.user == user %}
+                                                <span
+                                                    class="
+                                                        ml-1
+                                                        text-xs
+                                                        font-normal
+                                                        text-slate-400
+                                                    "
+                                                >
+                                                    (vous)
+                                                </span>
+                                            {% endif %}
+                                        </p>
+
+                                        <p class="text-sm text-slate-500">
+                                            {{ user.email }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td class="px-6 py-5">
+
+                                {% if 'ROLE_ADMIN' in user.roles %}
+
+                                    <span
+                                        class="
+                                            rounded-full
+                                            bg-violet-50
+                                            px-3
+                                            py-1
+                                            text-xs
+                                            font-semibold
+                                            text-violet-700
+                                        "
+                                    >
+                                        Administrateur
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="
+                                            rounded-full
+                                            bg-slate-100
+                                            px-3
+                                            py-1
+                                            text-xs
+                                            font-semibold
+                                            text-slate-600
+                                        "
+                                    >
+                                        Utilisateur
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td class="px-6 py-5">
+
+                                {% if user.active %}
+
+                                    <span
+                                        class="
+                                            inline-flex
+                                            items-center
+                                            gap-2
+                                            text-sm
+                                            font-semibold
+                                            text-emerald-700
+                                        "
+                                    >
+                                        <span
+                                            class="
+                                                h-2
+                                                w-2
+                                                rounded-full
+                                                bg-emerald-500
+                                            "
+                                        ></span>
+
+                                        Actif
+                                    </span>
+
+                                {% else %}
+
+                                    <span
+                                        class="
+                                            inline-flex
+                                            items-center
+                                            gap-2
+                                            text-sm
+                                            font-semibold
+                                            text-red-600
+                                        "
+                                    >
+                                        <span
+                                            class="
+                                                h-2
+                                                w-2
+                                                rounded-full
+                                                bg-red-500
+                                            "
+                                        ></span>
+
+                                        Inactif
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td
+                                class="
+                                    px-6
+                                    py-5
+                                    text-sm
+                                    text-slate-500
+                                "
+                            >
+                                {{ user.createdAt|date('d/m/Y') }}
+                            </td>
+
+
+                            <td class="px-6 py-5">
+
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        justify-end
+                                        gap-2
+                                    "
+                                >
+
+                                    <a
+                                        href="{{ path(
+                                            'admin_user_edit',
+                                            {id: user.id}
+                                        ) }}"
+                                        class="
+                                            rounded-lg
+                                            px-3
+                                            py-2
+                                            text-sm
+                                            font-semibold
+                                            text-slate-600
+                                            transition
+                                            hover:bg-slate-100
+                                            hover:text-slate-950
+                                        "
+                                    >
+                                        Modifier
+                                    </a>
+
+
+                                    {% if app.user != user %}
+
+                                        <form
+                                            method="post"
+                                            action="{{ path(
+                                                'admin_user_toggle',
+                                                {id: user.id}
+                                            ) }}"
+                                        >
+
+                                            <input
+                                                type="hidden"
+                                                name="_token"
+                                                value="{{ csrf_token(
+                                                    'toggle-user-' ~ user.id
+                                                ) }}"
+                                            >
+
+                                            <button
+                                                type="submit"
+                                                class="
+                                                    cursor-pointer
+                                                    rounded-lg
+                                                    px-3
+                                                    py-2
+                                                    text-sm
+                                                    font-semibold
+                                                    {% if user.active %}
+                                                        text-red-600
+                                                        hover:bg-red-50
+                                                    {% else %}
+                                                        text-emerald-600
+                                                        hover:bg-emerald-50
+                                                    {% endif %}
+                                                "
+                                            >
+                                                {% if user.active %}
+                                                    Désactiver
+                                                {% else %}
+                                                    Activer
+                                                {% endif %}
+                                            </button>
+
+                                        </form>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% else %}
+
+                        <tr>
+                            <td
+                                colspan="5"
+                                class="
+                                    px-6
+                                    py-12
+                                    text-center
+                                    text-slate-500
+                                "
+                            >
+                                Aucun utilisateur.
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
 </div>
+
 {% endblock %}
