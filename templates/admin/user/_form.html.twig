@@ -1,0 +1,220 @@
+{{ form_start(form, {
+    attr: {
+        class: 'space-y-6'
+    }
+}) }}
+
+<div class="grid gap-6 md:grid-cols-2">
+
+    <div>
+        {{ form_label(
+            form.firstName,
+            null,
+            {
+                label_attr: {
+                    class: 'mb-2 block text-sm font-semibold text-slate-700'
+                }
+            }
+        ) }}
+
+        {{ form_widget(
+            form.firstName,
+            {
+                attr: {
+                    class: 'w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10'
+                }
+            }
+        ) }}
+
+        {{ form_errors(form.firstName) }}
+    </div>
+
+
+    <div>
+        {{ form_label(
+            form.lastName,
+            null,
+            {
+                label_attr: {
+                    class: 'mb-2 block text-sm font-semibold text-slate-700'
+                }
+            }
+        ) }}
+
+        {{ form_widget(
+            form.lastName,
+            {
+                attr: {
+                    class: 'w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10'
+                }
+            }
+        ) }}
+
+        {{ form_errors(form.lastName) }}
+    </div>
+
+</div>
+
+
+<div>
+    {{ form_label(
+        form.email,
+        null,
+        {
+            label_attr: {
+                class: 'mb-2 block text-sm font-semibold text-slate-700'
+            }
+        }
+    ) }}
+
+    {{ form_widget(
+        form.email,
+        {
+            attr: {
+                class: 'w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10'
+            }
+        }
+    ) }}
+
+    {{ form_errors(form.email) }}
+</div>
+
+
+{% if form.plainPassword is defined %}
+
+    <div>
+        {{ form_label(
+            form.plainPassword,
+            null,
+            {
+                label_attr: {
+                    class: 'mb-2 block text-sm font-semibold text-slate-700'
+                }
+            }
+        ) }}
+
+        {{ form_widget(
+            form.plainPassword,
+            {
+                attr: {
+                    class: 'w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10'
+                }
+            }
+        ) }}
+
+        {{ form_errors(form.plainPassword) }}
+
+        <p class="mt-2 text-xs text-slate-500">
+            Minimum 8 caractères.
+        </p>
+    </div>
+
+{% endif %}
+
+
+<div>
+    {{ form_label(
+        form.roles,
+        null,
+        {
+            label_attr: {
+                class: 'mb-2 block text-sm font-semibold text-slate-700'
+            }
+        }
+    ) }}
+
+    {{ form_widget(
+        form.roles,
+        {
+            attr: {
+                class: 'w-full rounded-xl border border-slate-300 bg-white px-4 py-3'
+            }
+        }
+    ) }}
+
+    {{ form_errors(form.roles) }}
+</div>
+
+
+<div
+    class="
+        flex
+        items-center
+        justify-between
+        rounded-xl
+        border
+        border-slate-200
+        bg-slate-50
+        p-4
+    "
+>
+    <div>
+        <p class="font-semibold text-slate-800">
+            Compte actif
+        </p>
+
+        <p class="text-sm text-slate-500">
+            L'utilisateur pourra se connecter à l'application.
+        </p>
+    </div>
+
+    {{ form_widget(
+        form.isActive,
+        {
+            attr: {
+                class: 'h-5 w-5 rounded border-slate-300 text-emerald-600'
+            }
+        }
+    ) }}
+</div>
+
+
+<div
+    class="
+        flex
+        items-center
+        justify-end
+        gap-3
+        border-t
+        border-slate-100
+        pt-6
+    "
+>
+
+    <a
+        href="{{ path('admin_user_index') }}"
+        class="
+            rounded-xl
+            px-5
+            py-3
+            text-sm
+            font-semibold
+            text-slate-600
+            transition
+            hover:bg-slate-100
+        "
+    >
+        Annuler
+    </a>
+
+    <button
+        type="submit"
+        class="
+            cursor-pointer
+            rounded-xl
+            bg-slate-950
+            px-6
+            py-3
+            text-sm
+            font-semibold
+            text-white
+            transition
+            hover:bg-slate-800
+        "
+    >
+        {{ button_label|default('Enregistrer') }}
+    </button>
+
+</div>
+
+{{ form_end(form) }}
